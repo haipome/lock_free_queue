@@ -24,8 +24,8 @@ typedef struct
     int32_t unit_size;
     int32_t max_unit_num;
 
-    int32_t p_head;
-    int32_t p_tail;
+    volatile int32_t p_head; /* 链表头指针 */
+    volatile int32_t p_tail; /* 链表尾指针 */
 
     volatile int32_t w_tail; /* 下次写开始位置 */
 
