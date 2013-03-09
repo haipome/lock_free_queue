@@ -131,13 +131,13 @@ int lf_queue_push(lf_queue queue, void *unit)
 
     /* 将写完的单元插入链表尾  */
     int32_t p_tail, old_p_tail;
-    int reTryTime = 0;
+    int try_times = 0;
     do
     {
         old_p_tail = p_tail = head->p_tail;
         u_head = UNIT_HEAD(queue, p_tail);
 
-        if ((++reTryTime) >= 3)
+        if ((++try_times) >= 3)
         {
             while (u_head->next != LIST_END)
             {
