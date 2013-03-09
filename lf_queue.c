@@ -104,6 +104,7 @@ int lf_queue_push(lf_queue queue, void *unit)
     do
     {
         w_len = head->w_len;
+
         if (head->w_len >= head->max_unit_num)
             return -1;
     } while (!__sync_bool_compare_and_swap(&head->w_len, w_len, w_len + 1));
