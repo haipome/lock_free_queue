@@ -103,9 +103,7 @@ int lf_queue_push(lf_queue queue, void *unit)
     int32_t w_len;
     do
     {
-        w_len = head->w_len;
-
-        if (head->w_len >= head->max_unit_num)
+        if ((w_len = head->w_len) >= head->max_unit_num)
             return -1;
     } while (!__sync_bool_compare_and_swap(&head->w_len, w_len, w_len + 1));
 
@@ -123,9 +121,8 @@ int lf_queue_push(lf_queue queue, void *unit)
     } while (u_head->use_falg);
 
     /* 写单元头 */
-    unit_head *w_head = UNIT_HEAD(queue, w_tail);
-    w_head->next = LIST_END;
-    w_head->use_falg = true;
+    u_head->next = LIST_END;
+    u_head->use_falg = true;
 
     /* 写数据  */
     memcpy(UNIT_DATA(queue, w_tail), unit, head->unit_size);
@@ -169,9 +166,7 @@ int lf_queue_pop(lf_queue queue, void *unit)
     int32_t r_len;
     do
     {
-        r_len = head->r_len;
-
-        if (r_len <= 0)
+        if ((r_len = head->r_len) <= 0)
             return -1;
     } while (!__sync_bool_compare_and_swap(&head->r_len, r_len, r_len - 1));
 
