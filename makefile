@@ -7,4 +7,6 @@ MACHINE=x86-64
 endif
 
 all: lf_queue.c lf_queue.h
-	gcc -c -g -Wall -march=${MACHINE} lf_queue.c -I /usr/local/commlib/baselib/
+	gcc -o server test_server.c lf_queue.c -march=${MACHINE} -g -Wall
+	gcc -o client test_client.c lf_queue.c -march=${MACHINE} -g -Wall
+
